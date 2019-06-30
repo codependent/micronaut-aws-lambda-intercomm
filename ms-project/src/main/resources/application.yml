@@ -1,0 +1,18 @@
+micronaut:
+  application:
+    name: ms-project
+
+aws:
+  lambda:
+    functions:
+      ms-user:
+        functionName: ms-user
+        qualifer: ms-user
+    region: eu-west-3
+
+ms-user:
+  percentage: 0.21
+  scale: 2
+  retry:
+    attempts: 5
+    delay: 5s

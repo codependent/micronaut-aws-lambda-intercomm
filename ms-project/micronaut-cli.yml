@@ -1,0 +1,5 @@
+profile: service
+defaultPackage: com.codependent.awsintercomm.project
+---
+testFramework: spek
+sourceLanguage: kotlin

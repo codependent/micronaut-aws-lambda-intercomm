@@ -1,0 +1,29 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: AWS MsUser API - com.codependent.lambdaintercomm.user::ms-user
+Globals:
+  Api:
+    EndpointConfiguration: REGIONAL
+Resources:
+  MsUserFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: com.codependent.lambdaintercomm.user.StreamLambdaHandler::handleRequest
+      Runtime: java8
+      CodeUri: build/distributions/ms-user-0.1.zip
+      MemorySize: 512
+      Policies: AWSLambdaBasicExecutionRole
+      Timeout: 15
+      Events:
+        GetResource:
+          Type: Api
+          Properties:
+            Path: /{proxy+}
+            Method: any
+
+Outputs:
+  MsUserApi:
+    Description: URL for application
+    Value: !Sub 'https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/ping'
+    Export:
+      Name: MsUserApi

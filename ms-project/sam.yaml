@@ -1,0 +1,29 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: AWS MsProject API - com.codependent.awsintercomm.project::ms-project
+Globals:
+  Api:
+    EndpointConfiguration: REGIONAL
+Resources:
+  MsProjectFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: com.codependent.awsintercomm.project.StreamLambdaHandler::handleRequest
+      Runtime: java8
+      CodeUri: build/distributions/ms-project-0.1.zip
+      MemorySize: 512
+      Policies: AWSLambdaBasicExecutionRole
+      Timeout: 15
+      Events:
+        GetResource:
+          Type: Api
+          Properties:
+            Path: /{proxy+}
+            Method: any
+
+Outputs:
+  MsProjectApi:
+    Description: URL for application
+    Value: !Sub 'https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/ping'
+    Export:
+      Name: MsProjectApi
